@@ -3,7 +3,9 @@ Code base for Jonas' master thesis project. Running U-net on a Xilinx ZCU104
 
 ## Running the code provided in the codebase
 ### Training the model:
-There are several arguments that can be parsed, use `--h` to display the options. To train the model with the default dataset and a dimension of 128x128 simply run:
+Assuming that the Camus dataset is downloaded and put into the correct folder: `src/models/datasets/`.
+
+There are several arguments that can be parsed, use `--h` to display the options. To train the model with the default dataset and a dimension of 128x128 run:
 ```
 python unet.py --dim 128 --train
 ```
@@ -14,7 +16,7 @@ Running the following steps of the pipeline requires use of the docker provided 
 ```
 ./docker_run.sh xilinx/vitis-ai:latest
 ```
-Thereafter simply run:
+Thereafter run to install dependencies:
 ```
 pip install -r requirements.txt
 ```
@@ -23,7 +25,7 @@ When the accuracy of the model is satisfactory the model can be quantized to int
 ```
 python models.py --input datasets/training/ --model trained_models/2021-03-25_03-40-20/weights_128x128.pth --quant_mode calib --dim 128
 ```
-To test the accuracy of the quantized model simply run:
+To test the accuracy of the quantized model run:
 ```
 python models.py --input datasets/training/ --model trained_models/2021-03-25_03-40-20/weights_128x128.pth --quant_mode test --dim 128
 ```
@@ -39,8 +41,11 @@ vai_c_xir -x quantize_result/unet_int.xmodel -a /opt/vitis_ai/compiler/arch/DPUC
 ```
 
 ### Running the deployed model on FPGA:
-Transfer the generated files to the FPGA using `scp` commands. Thereafter, simply run the quantized model on the FPGA using:
+Transfer the generated files to the FPGA using `scp` commands. Thereafter, run the quantized model on the FPGA using:
 ```
 ./run.sh
 ```
 Where the output will be transferred back as .png files which can be qualitatively evaluated using the `postprocess.py`.
+```
+python postprocess.py --dim 128
+```
