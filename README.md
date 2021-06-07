@@ -43,4 +43,4 @@ Transfer the generated files to the FPGA using `scp` commands. Thereafter, simpl
 ```
 ./run.sh
 ```
-Where the `--save` command simply saves the output at .png-files which in turn can be transferred back to the host using `scp` commands to verify the output.
+Where the output will be transferred back as .png files which can be qualitatively evaluated using the `postprocess.py`.
