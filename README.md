@@ -1,7 +1,7 @@
-# Master thesis: Code base
-Code base for Jonas' master thesis project. Running U-net on a ZCU104
+# Acceleration of U-net using Vitis AI: Code base
+Code base for Jonas' master thesis project. Running U-net on a Xilinx ZCU104
 
-## Master codebase for dummies
+## Running the code provided in the codebase
 ### Training the model:
 There are several arguments that can be parsed, use `--h` to display the options. To train the model with the default dataset and a dimension of 128x128 simply run:
 ```
@@ -9,7 +9,8 @@ python unet.py --dim 128 --train
 ```
 
 ### Quantizing the model:
-Running the following steps of the pipeline requires use of the docker prvided in Vitis-AI. 
+Running the following steps of the pipeline requires use of the docker provided in [Vitis-AI](https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html). 
+
 ```
 ./docker_run.sh xilinx/vitis-ai:latest
 ```
@@ -40,6 +41,6 @@ vai_c_xir -x quantize_result/unet_int.xmodel -a /opt/vitis_ai/compiler/arch/DPUC
 ### Running the deployed model on FPGA:
 Transfer the generated files to the FPGA using `scp` commands. Thereafter, simply run the quantized model on the FPGA using:
 ```
-python3 unet_fpga.py --xmodel unet_deploy.xmodel --dim 128 --threads 4 --save
+./run.sh
 ```
 Where the `--save` command simply saves the output at .png-files which in turn can be transferred back to the host using `scp` commands to verify the output.
