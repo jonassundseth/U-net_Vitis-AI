@@ -129,12 +129,10 @@ dmypy.json
 .pyre/
 
 # User added
-datasets/
 trained_models/
 quantize_result/
 .empty/
 *.png 
 *.xmodel
 *.pth
-FPGA_output/
 Deploy/
