@@ -85,7 +85,7 @@ def main(options):
     time_total = time_end - time_start
     total_frames = len(input_stream)
     fps = float(total_frames/time_total)
-    print(time_list)
+    
     print(
         "FPS=%.2f, total frames = %.2f , time=%.6f seconds, latency=%.6f"
         % (fps, total_frames, time_total, np.mean(time_list))
