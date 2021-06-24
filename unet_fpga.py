@@ -83,7 +83,6 @@ def rescale(img, dim):
     new_h_i = int(new_h)
     new_w_i = int(new_w)
 
-    #new_img = np.empty([new_h_i, new_w_i])
     new_img = cv2.resize(img, (new_w_i, new_h_i))
     
     return new_img
@@ -183,8 +182,8 @@ def runUnet(runner: "Runner", img, cnt):
         # Fill buffer
         for j in range(runSize):
             imageRun = inputData[0]
-            #imageRun[j, ...] = img[(count + j) % n_of_images].reshape(input_ndim[1:])
-            imageRun[j, ...] = img[(count + j) % n_of_images].resize(input_ndim[1:])
+            imageRun[j, ...] = img[(count + j) % n_of_images].reshape(input_ndim[1:])
+            
         start = time.time()
         job_id = runner.execute_async(inputData, outputData)
         runner.wait(job_id)
@@ -350,13 +349,13 @@ def main(opt):
     
     # Saving output to .png files
     for idx, pid in enumerate(patient_id):
-        if idx < cnt:
+        if idx < cnt*opt.threads:
             output = np.zeros(np.shape(results)[1:3])
             output = mergemasks(results[idx])
             im = pilimg.fromarray((output*64).astype(np.uint8))
             im = im.convert("L")
             im.save('unet/results/output_mask_' + pid + '.png')
-    
+        
 
 if __name__ == "__main__":
     opt = _options()
